@@ -3,149 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>אוטוזון - קנייה ומכירת רכבים</title>
+    <title>אוטוזון - רכבים לכל מטרה</title>
     <style>
         html { scroll-behavior: smooth; }
+        
+        /* הגדרת הרקע השקוף על תמונה */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0; padding: 0;
-            background-color: #1a1d21; color: white;
+            /* כאן אנחנו מגדירים את תמונת הרקע */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* התמונה נשארת קבועה כשגוללים */
+            color: white;
             text-align: center;
         }
+
+        /* השכבה השחורה החצי-שקופה שמכסה את כל העמוד */
+        .page-overlay {
+            background-color: rgba(0, 0, 0, 0.85); /* 85% שחור שקוף */
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        /* עיצוב הכותרת (Header) */
         header {
             padding: 100px 20px;
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('background.jpg');
-            background-size: cover; border-bottom: 3px solid #e1b154;
+            border-bottom: 3px solid #e1b154; /* פס זהב */
         }
-        h1 { font-size: 4rem; color: #e1b154; margin: 0; }
-        .hero-text { font-size: 2.2rem; font-weight: bold; margin: 40px 0; }
+        h1 { font-size: 3.5rem; color: #e1b154; margin: 0; }
+        .hero-text { font-size: 2.2rem; font-weight: bold; margin: 30px 0 10px; }
+        .motto { font-size: 1.3rem; margin-bottom: 40px; font-weight: 300; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.4; }
         
-        .section-title { font-size: 2.5rem; color: #e1b154; margin: 60px 0 20px; }
-        
-        /* סידור הרכבים בגלריה */
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .car-card {
-            background: #25282c;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-        }
+        /* גלריית הרכבים */
+        .gallery-title { font-size: 2.5rem; color: #e1b154; margin: 60px 0 30px; }
+        .cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .car-card { background: rgba(37, 40, 44, 0.9); border-radius: 12px; border: 1px solid #333; transition: 0.3s; padding: 15px; overflow: hidden; }
         .car-card:hover { border-color: #e1b154; transform: translateY(-5px); }
-        .car-card img { width: 100%; height: 200px; object-fit: cover; }
-        
-        /* טקסט ליד/מתחת לתמונה */
-        .car-details {
-            padding: 15px;
-            background: #111;
-            border-top: 2px solid #e1b154;
-        }
+        .car-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
+        .car-details { padding: 15px; text-align: right; border-top: 1px solid #333; margin-top: 10px; }
         .car-name { font-size: 1.4rem; color: #e1b154; font-weight: bold; margin-bottom: 5px; }
-        .car-specs { font-size: 1rem; color: #ccc; }
+        .car-price { font-size: 1.3rem; color: #fff; font-weight: bold; margin-bottom: 15px; }
+        
+        /* כפתורי וואטסאפ */
+        .btn-whatsapp-car { display: inline-block; background-color: #25d366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .contact-btn { display: inline-block; background-color: #e1b154; color: black; padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.3rem; margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; }
 
-        .btn-whatsapp {
-            display: inline-block; background-color: #e1b154; color: black;
-            padding: 15px 35px; text-decoration: none; border-radius: 50px;
-            font-weight: bold; font-size: 1.2rem; margin: 40px 0;
-        }
-        footer { background: #000; padding: 30px; border-top: 2px solid #e1b154; }
+        footer { background: black; padding: 30px; border-top: 2px solid #e1b154; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>AUTOZONE</h1>
-        <div class="hero-text">מעל 20 שנה של יושרה ואמינות בקנייה ומכירת רכבים</div>
-        <p style="font-size: 1.3rem;">מגוון עצום של רכבים לכל תקציב: ג'יפים חזקים, רכבי 7 מקומות למשפחה, מכוניות זולות ומכוניות יוקרה.</p>
-        <a href="https://wa.me/972525252428" class="btn-whatsapp">לחצו להצעת מחיר בוואטסאפ</a>
-    </header>
+    <div class="page-overlay">
 
-    <h2 id="gallery" class="section-title">הרכבים למכירה</h2>
-    
-    <div class="cars-grid">
-        <div class="car-card">
-            <img src="car1.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">יונדאי טוסון 2022</div>
-                <div class="car-specs">יד ראשונה • 45,000 ק"מ • שמור מאוד</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car2.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">מאזדה CX-5 2021</div>
-                <div class="car-specs">יד שנייה • דגם מפואר • טרייד אין</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car3.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">סקודה אוקטביה 2020</div>
-                <div class="car-specs">מנוע 1.5 טורבו • מטופל במוסך מורשה</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car4.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">קיה ספורטאז' 2023</div>
-                <div class="car-specs">חדש לגמרי • 0 ק"מ • אחריות יצרן</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car5.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">מיצובישי אאוטלנדר (7 מקומות)</div>
-                <div class="car-specs">מנוע 2.0 • דגם מפואר</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car6.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">פיג'ו 3008 2022</div>
-                <div class="car-specs">טורבו דיזל • צבע שחור • חסכוני</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car7.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">יונדאי איוניק 5 2023</div>
-                <div class="car-specs">חשמלית לגמרי • דגם עלית</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car8.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">מאזדה 3 2021</div>
-                <div class="car-specs">דגם סדאן • שמור • מחיר אטרקטיבי</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car9.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">טויוטה קורולה קרוס 2022</div>
-                <div class="car-specs">היברידית • קילומטראז' נמוך</div>
-            </div>
-        </div>
-        <div class="car-card">
-            <img src="car10.jpg" alt="רכב למכירה">
-            <div class="car-details">
-                <div class="car-name">פולקסווגן גולף 2020</div>
-                <div class="car-specs">מנוע 1.4 טורבו • יד שנייה</div>
-            </div>
-        </div>
-    </div>
+        <header>
+            <h1>AUTOZONE</h1>
+            <div class="hero-text">אוטוזון - רכבים לכל מטרה</div>
+            <div class="motto">מגוון עצום של רכבים לכל תקציב: ג'יפים חזקים, רכבי 7 מקומות למשפחה, רכבי עבודה, מכוניות זולות ומכוניות יוקרה.</div>
+        </header>
 
-    <footer>
-        <div style="font-size: 1.4rem; color: #e1b154; margin-bottom: 10px;">055-159-277 • 053-211-379</div>
-        <p>בואו לאוטוזון אשקלון ונמצא לכם את הרכב המושלם</p>
-    </footer>
+        <h2 id="gallery" class="gallery-title">הרכבים למכירה</h2>
+        
+        <div class="cars-grid">
+            <div class="car-card">
+                <img src="car1.jpg" alt="יונדאי טוסון">
+                <div class="car-details">
+                    <div class="car-name">יונדאי טוסון 2022</div>
+                    <div class="car-price">145,000 ₪</div>
+                    <a href="https://wa.me/972525252428?text=אני%20מעוניין%20ביונדאי%20טוסון%202022" class="btn-whatsapp-car">אני מעוניין ברכב זה</a>
+                </div>
+            </div>
+            </div>
 
-</body>
+        <footer>
+            <div style="font-size: 1.4rem; color: #e1b154; margin-bottom: 15px; direction: ltr;">052-525-2428</div>
+            <p>בואו לאוטוזון אשקלון ונמצא לכם את הרכב המושלם</p>
+            <a href="https://wa.me/972525252428" class="contact-btn">
+                <span>💬</span> דברו איתנו בוואטסאפ
+            </a>
+        </footer>
+
+    </div> </body>
 </html>
