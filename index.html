@@ -6,83 +6,127 @@
     <title>אוטוזון - רכבים לכל מטרה</title>
     <style>
         html { scroll-behavior: smooth; }
-        
-        /* הגדרת הרקע השקוף על תמונה */
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0; padding: 0;
-            /* כאן אנחנו מגדירים את תמונת הרקע */
-            background-image: url('background.jpg');
+            background-image: url('background.jpg'); /* תמונת רקע שאתה מעלה */
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* התמונה נשארת קבועה כשגוללים */
+            background-attachment: fixed;
+            background-color: #1a1d21;
             color: white;
             text-align: center;
         }
 
-        /* השכבה השחורה החצי-שקופה שמכסה את כל העמוד */
         .page-overlay {
-            background-color: rgba(0, 0, 0, 0.85); /* 85% שחור שקוף */
+            background-color: rgba(0, 0, 0, 0.85); /* אפקט שקוף יוקרתי */
             min-height: 100vh;
             width: 100%;
+            padding-bottom: 50px;
         }
 
-        /* עיצוב הכותרת (Header) */
-        header {
-            padding: 100px 20px;
-            border-bottom: 3px solid #e1b154; /* פס זהב */
-        }
-        h1 { font-size: 3.5rem; color: #e1b154; margin: 0; }
-        .hero-text { font-size: 2.2rem; font-weight: bold; margin: 30px 0 10px; }
-        .motto { font-size: 1.3rem; margin-bottom: 40px; font-weight: 300; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.4; }
+        header { padding: 80px 20px; border-bottom: 3px solid #e1b154; }
+        h1 { font-size: 3.5rem; color: #e1b154; margin: 0; letter-spacing: 2px; }
+        .hero-text { font-size: 2.2rem; font-weight: bold; margin: 25px 0 10px; }
+        .motto { font-size: 1.2rem; margin-bottom: 40px; font-weight: 300; max-width: 800px; margin-left: auto; margin-right: auto; line-height: 1.5; color: #ddd; }
         
-        /* גלריית הרכבים */
-        .gallery-title { font-size: 2.5rem; color: #e1b154; margin: 60px 0 30px; }
+        .gallery-title { font-size: 2.5rem; color: #e1b154; margin: 50px 0 30px; }
+        
         .cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .car-card { background: rgba(37, 40, 44, 0.9); border-radius: 12px; border: 1px solid #333; transition: 0.3s; padding: 15px; overflow: hidden; }
+        .car-card { background: rgba(37, 40, 44, 0.95); border-radius: 15px; border: 1px solid #444; transition: 0.3s; padding: 15px; position: relative; }
         .car-card:hover { border-color: #e1b154; transform: translateY(-5px); }
-        .car-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; }
-        .car-details { padding: 15px; text-align: right; border-top: 1px solid #333; margin-top: 10px; }
-        .car-name { font-size: 1.4rem; color: #e1b154; font-weight: bold; margin-bottom: 5px; }
-        .car-price { font-size: 1.3rem; color: #fff; font-weight: bold; margin-bottom: 15px; }
         
-        /* כפתורי וואטסאפ */
-        .btn-whatsapp-car { display: inline-block; background-color: #25d366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .contact-btn { display: inline-block; background-color: #e1b154; color: black; padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.3rem; margin-top: 40px; display: inline-flex; align-items: center; gap: 10px; }
+        /* גלריית תמונות עם חיצים */
+        .slider-container { width: 100%; height: 230px; position: relative; overflow: hidden; border-radius: 10px; background: #000; }
+        .slider-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.4s ease; }
+        .slider-image.active { opacity: 1; position: relative; }
+        
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: #e1b154; border: none; font-size: 1.8rem; padding: 10px; cursor: pointer; z-index: 5; border-radius: 50%; }
+        .slider-btn.prev { right: 10px; }
+        .slider-btn.next { left: 10px; }
 
-        footer { background: black; padding: 30px; border-top: 2px solid #e1b154; }
+        .car-info { padding: 15px 0; }
+        .car-name { font-size: 1.5rem; color: #e1b154; font-weight: bold; margin-bottom: 8px; }
+        .car-price { font-size: 1.3rem; margin-bottom: 15px; font-weight: bold; }
+        
+        .btn-whatsapp-car { display: flex; align-items: center; justify-content: center; gap: 8px; background-color: #25d366; color: white; padding: 12px; text-decoration: none; border-radius: 8px; font-weight: bold; transition: 0.3s; }
+        .btn-whatsapp-car:hover { background-color: #1ebe57; }
+
+        footer { background: rgba(0,0,0,0.9); padding: 40px 20px; border-top: 2px solid #e1b154; margin-top: 50px; }
+        .footer-info { font-size: 1.2rem; margin-bottom: 15px; color: #e1b154; }
+        .main-whatsapp { display: inline-flex; align-items: center; gap: 10px; background-color: #e1b154; color: black; padding: 15px 40px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <div class="page-overlay">
+<div class="page-overlay">
+    <header>
+        <h1>AUTOZONE</h1>
+        <div class="hero-text">אוטוזון - רכבים לכל מטרה</div>
+        <div class="motto">ג'יפים, רכבי 7 מקומות, רכבי עבודה, מכוניות זולות ויוקרתיות. <br> <b>הכל תחת קורת גג אחת באמונה ויושרה.</b></div>
+    </header>
 
-        <header>
-            <h1>AUTOZONE</h1>
-            <div class="hero-text">אוטוזון - רכבים לכל מטרה</div>
-            <div class="motto">מגוון עצום של רכבים לכל תקציב: ג'יפים חזקים, רכבי 7 מקומות למשפחה, רכבי עבודה, מכוניות זולות ומכוניות יוקרה.</div>
-        </header>
+    <h2 class="gallery-title">הרכבים שלנו</h2>
+    
+    <div class="cars-grid">
+        <!-- רכב 1 -->
+        <div class="car-card">
+            <div class="slider-container">
+                <button class="slider-btn prev" onclick="moveSlide(this, -1)">❯</button>
+                <img src="car1_1.jpg" class="slider-image active">
+                <img src="car1_2.jpg" class="slider-image">
+                <img src="car1_3.jpg" class="slider-image">
+                <img src="car1_4.jpg" class="slider-image">
+                <img src="car1_5.jpg" class="slider-image">
+                <button class="slider-btn next" onclick="moveSlide(this, 1)">❮</button>
+            </div>
+            <div class="car-info">
+                <div class="car-name">כאן כותבים דגם רכב 1</div>
+                <div class="car-price">מחיר: התקשרו לפרטים</div>
+                <a href="https://wa.me/972525252428?text=שלום, אני מעוניין ברכב מספר 1" class="btn-whatsapp-car">אני מעוניין ברכב זה</a>
+            </div>
+        </div>
 
-        <h2 id="gallery" class="gallery-title">הרכבים למכירה</h2>
+        <!-- רכב 2 -->
+        <div class="car-card">
+            <div class="slider-container">
+                <button class="slider-btn prev" onclick="moveSlide(this, -1)">❯</button>
+                <img src="car2_1.jpg" class="slider-image active">
+                <img src="car2_2.jpg" class="slider-image">
+                <img src="car2_3.jpg" class="slider-image">
+                <img src="car2_4.jpg" class="slider-image">
+                <img src="car2_5.jpg" class="slider-image">
+                <button class="slider-btn next" onclick="moveSlide(this, 1)">❮</button>
+            </div>
+            <div class="car-info">
+                <div class="car-name">כאן כותבים דגם רכב 2</div>
+                <div class="car-price">מחיר: התקשרו לפרטים</div>
+                <a href="https://wa.me/972525252428?text=שלום, אני מעוניין ברכב מספר 2" class="btn-whatsapp-car">אני מעוניין ברכב זה</a>
+            </div>
+        </div>
+
+        <!-- ניתן לשכפל את הבלוק הזה לעוד 4 רכבים -->
+    </div>
+
+    <footer>
+        <div class="footer-info">📍 בעלי המלאכה 3, אשדוד</div>
+        <div class="footer-info" style="direction: ltr;">📞 052-525-2428</div>
+        <p>בואו לאוטוזון אשדוד ונמצא לכם את הרכב המושלם</p>
+        <a href="https://wa.me/972525252428" class="main-whatsapp">דברו איתנו בוואטסאפ</a>
+    </footer>
+</div>
+
+<script>
+    function moveSlide(btn, direction) {
+        const container = btn.parentElement;
+        const images = container.querySelectorAll('.slider-image');
+        let activeIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
         
-        <div class="cars-grid">
-            <div class="car-card">
-                <img src="car1.jpg" alt="יונדאי טוסון">
-                <div class="car-details">
-                    <div class="car-name">יונדאי טוסון 2022</div>
-                    <div class="car-price">145,000 ₪</div>
-                    <a href="https://wa.me/972525252428?text=אני%20מעוניין%20ביונדאי%20טוסון%202022" class="btn-whatsapp-car">אני מעוניין ברכב זה</a>
-                </div>
-            </div>
-            </div>
+        images[activeIndex].classList.remove('active');
+        activeIndex = (activeIndex + direction + images.length) % images.length;
+        images[activeIndex].classList.add('active');
+    }
+</script>
 
-        <footer>
-            <div style="font-size: 1.4rem; color: #e1b154; margin-bottom: 15px; direction: ltr;">052-525-2428</div>
-            <p>בואו לאוטוזון אשקלון ונמצא לכם את הרכב המושלם</p>
-            <a href="https://wa.me/972525252428" class="contact-btn">
-                <span>💬</span> דברו איתנו בוואטסאפ
-            </a>
-        </footer>
-
-    </div> </body>
+</body>
 </html>
